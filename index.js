@@ -50,7 +50,6 @@ const transformTextToCharBag = (text, n) => {
   }
 
   // add last word
-
   const start = spaceIndexes[spaceIndexes.length - 1] + 1;
 
   words.push(charIds.slice(start));
