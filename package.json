@@ -1,6 +1,6 @@
 {
   "name": "char-bag",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "encode and decode text to numeric char pairs and back",
   "main": "index.js",
   "scripts": {
