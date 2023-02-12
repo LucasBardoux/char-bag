@@ -16,7 +16,9 @@ const Transformer = require('char-bag');
 
 const transformer = new Transformer();
 
-console.log(transformer.encode('Hello World!'));
+const encoded = transformer.encode('Hello World!');
+
+console.log(encoded);
 ```
 
 ### Output
@@ -37,7 +39,9 @@ const transformer = new Transformer({
   normalized: true,
 });
 
-console.log(transformer.encode('Hello World!'));
+const encoded = transformer.encode('Hello World!');
+
+console.log(encoded);
 ```
 
 ### Output
@@ -58,16 +62,38 @@ const transformer = new Transformer({
   normalized: true,
 });
 
-console.log(
-  transformer.decode([
-    [-0.4375, -0.2109375, -0.15625, -0.15625, -0.1328125],
-    [-0.3203125, -0.1328125, -0.109375, -0.15625, -0.21875, -0.7421875],
-  ])
-);
+const decoded = transformer.decode([
+  [-0.4375, -0.2109375, -0.15625, -0.15625, -0.1328125],
+  [-0.3203125, -0.1328125, -0.109375, -0.15625, -0.21875, -0.7421875],
+]);
+
+console.log(decoded);
 ```
 
 ### Output
 
 ```javascript
-'Hello World!'
+'Hello World!';
+```
+
+### Flatten Example
+
+```javascript
+const Transformer = require('char-bag');
+
+const transformer = new Transformer({
+  flatten: true,
+});
+
+const encoded = transformer.encode('Hello World!');
+
+console.log(encoded);
+```
+
+### Output
+
+```javascript
+[
+  72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100, 33
+];
 ```

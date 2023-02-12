@@ -30,8 +30,10 @@ const getCharsFromCodes = (charCodes, n) => {
   return chars.join('');
 };
 
-const transformTextToCharBag = (text, n) => {
+const transformTextToCharBag = (text, n, f) => {
   const charIds = getCharCodes(text, n);
+
+  if (f) return charIds;
 
   const spaceIndexes = charIds.reduce((acc, charId, index) => {
     if (n ? charId === -1 : charId === 32) {
@@ -57,7 +59,9 @@ const transformTextToCharBag = (text, n) => {
   return words;
 };
 
-const transformCharBagToText = (charBag, n) => {
+const transformCharBagToText = (charBag, n, f) => {
+  if (f) return getCharsFromCodes(charBag, n);
+
   const charCodes = charBag.reduce((acc, charIds) => {
     acc.push(...charIds);
 
@@ -71,15 +75,16 @@ const transformCharBagToText = (charBag, n) => {
 };
 
 module.exports = class Transformer {
-  constructor(options = {}) {
-    this.normalized = options.normalized || false;
+  constructor({ normalized = false, flatten = false } = {}) {
+    this.normalized = normalized;
+    this.flatten = flatten;
   }
 
   encode(text) {
-    return transformTextToCharBag(text, this.normalized);
+    return transformTextToCharBag(text, this.normalized, this.flatten);
   }
 
   decode(charBag) {
-    return transformCharBagToText(charBag, this.normalized);
+    return transformCharBagToText(charBag, this.normalized, this.flatten);
   }
 };
