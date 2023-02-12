@@ -3,13 +3,13 @@
 A simple, lightweight, and fast character bag implementation for Javascript.
 It is designed to be used in a Node.js environment, but can be used in the browser as well.
 
-## Installation
+### Installation
 
 ```bash
 npm install char-bag
 ```
 
-## Usage without normalization
+### Usage without normalization
 
 ```javascript
 const Transformer = require('char-bag');
@@ -28,7 +28,7 @@ console.log(transformer.encode('Hello World!'));
 ];
 ```
 
-## Usage with normalization
+### Usage with normalization
 
 ```javascript
 const Transformer = require('char-bag');
@@ -49,7 +49,7 @@ console.log(transformer.encode('Hello World!'));
 ];
 ```
 
-## Decode Example
+### Decode Example
 
 ```javascript
 const Transformer = require('char-bag');
