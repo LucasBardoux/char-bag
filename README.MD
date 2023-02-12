@@ -9,7 +9,7 @@ It is designed to be used in a Node.js environment, but can be used in the brows
 npm install char-bag
 ```
 
-### Usage without normalization
+## Usage without normalization
 
 ```javascript
 const Transformer = require('char-bag');
