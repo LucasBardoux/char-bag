@@ -1,48 +1,36 @@
-const normalizeCharCode = (charCode) => {
-  // normalize the full range of charCodes (normalize between -1 and 1) for utf-8
-  if (charCode === 32) return -1;
-  return charCode / 128 - 1;
-};
+const normalizeCharCode = (charCode) =>
+  charCode === 32 ? -1 : charCode / 128 - 1;
+const denormalizeCharCode = (charCode) =>
+  charCode === -1 ? 32 : (charCode + 1) * 128;
 
-const denormalizeCharCode = (charCode) => {
-  // denormalize the full range of charCodes (denormalize between -1 and 1) for utf-8
-  if (charCode === -1) return 32;
-  return (charCode + 1) * 128;
-};
-
-const getCharCodes = (str, n) => {
+const getCharCodes = (str, normalize) => {
   const charCodes = [];
   for (let i = 0; i < str.length; i += 1) {
     charCodes.push(
-      n ? normalizeCharCode(str.charCodeAt(i)) : str.charCodeAt(i)
+      normalize ? normalizeCharCode(str.charCodeAt(i)) : str.charCodeAt(i)
     );
   }
   return charCodes;
 };
 
-const getCharsFromCodes = (charCodes, n) => {
-  const chars = [];
-  for (let i = 0; i < charCodes.length; i += 1) {
-    chars.push(
-      String.fromCharCode(n ? denormalizeCharCode(charCodes[i]) : charCodes[i])
-    );
-  }
-  return chars.join('');
+const getCharsFromCodes = (charCodes, denormalize) => {
+  return charCodes
+    .map((charCode) =>
+      String.fromCharCode(
+        denormalize ? denormalizeCharCode(charCode) : charCode
+      )
+    )
+    .join('');
 };
 
-const transformTextToCharBag = (text, n, f) => {
-  const charIds = getCharCodes(text, n);
+const transformTextToCharBag = (text, normalize, flatten) => {
+  if (flatten) return getCharCodes(text, normalize);
 
-  if (f) return charIds;
-
+  const charIds = getCharCodes(text, normalize);
   const spaceIndexes = charIds.reduce((acc, charId, index) => {
-    if (n ? charId === -1 : charId === 32) {
-      acc.push(index);
-    }
+    if (normalize ? charId === -1 : charId === 32) acc.push(index);
     return acc;
   }, []);
-
-  // split charIds into words by spaceIndexes
   const words = [];
 
   for (let i = 0; i < spaceIndexes.length; i += 1) {
@@ -50,28 +38,23 @@ const transformTextToCharBag = (text, n, f) => {
     const end = spaceIndexes[i];
     words.push(charIds.slice(start, end));
   }
-
-  // add last word
-  const start = spaceIndexes[spaceIndexes.length - 1] + 1;
-
-  words.push(charIds.slice(start));
+  words.push(charIds.slice(spaceIndexes[spaceIndexes.length - 1] + 1));
 
   return words;
 };
 
-const transformCharBagToText = (charBag, n, f) => {
-  if (f) return getCharsFromCodes(charBag, n);
-
-  const charCodes = charBag.reduce((acc, charIds) => {
-    acc.push(...charIds);
-
-    // add space if not last word
-    if (charBag.indexOf(charIds) !== charBag.length - 1) acc.push(n ? -1 : 32);
-
-    return acc;
-  }, []);
-
-  return getCharsFromCodes(charCodes, n);
+const transformCharBagToText = (charBag, denormalize, flatten) => {
+  return flatten
+    ? getCharsFromCodes(charBag, denormalize)
+    : getCharsFromCodes(
+        charBag.reduce((acc, charIds) => {
+          acc.push(...charIds);
+          if (charBag.indexOf(charIds) !== charBag.length - 1)
+            acc.push(denormalize ? -1 : 32);
+          return acc;
+        }, []),
+        denormalize
+      );
 };
 
 module.exports = class Transformer {
