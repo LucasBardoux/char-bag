@@ -53,6 +53,28 @@ console.log(encoded);
 ];
 ```
 
+### Usage Flattened
+
+```javascript
+const Transformer = require('char-bag');
+
+const transformer = new Transformer({
+  flatten: true,
+});
+
+const encoded = transformer.encode('Hello World!');
+
+console.log(encoded);
+```
+
+### Output
+
+```javascript
+[
+  72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100, 33
+];
+```
+
 ### Decode Example
 
 ```javascript
@@ -74,26 +96,4 @@ console.log(decoded);
 
 ```javascript
 'Hello World!';
-```
-
-### Flatten Example
-
-```javascript
-const Transformer = require('char-bag');
-
-const transformer = new Transformer({
-  flatten: true,
-});
-
-const encoded = transformer.encode('Hello World!');
-
-console.log(encoded);
-```
-
-### Output
-
-```javascript
-[
-  72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100, 33
-];
 ```
