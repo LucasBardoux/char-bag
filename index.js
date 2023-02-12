@@ -71,7 +71,7 @@ const transformCharBagToText = (charBag, n) => {
 };
 
 module.exports = class Transformer {
-  constructor(options) {
+  constructor(options = {}) {
     this.normalized = options.normalized || false;
   }
 
