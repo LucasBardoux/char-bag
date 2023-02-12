@@ -69,5 +69,5 @@ console.log(
 ### Output
 
 ```javascript
-'Hello World!';
+'Hello World!'
 ```
