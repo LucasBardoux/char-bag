@@ -4,7 +4,7 @@
   "description": "encode and decode text to numeric char pairs and back",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "char",
@@ -14,5 +14,8 @@
     "ai"
   ],
   "author": "lucas.bardoux.dev@gmail.com",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.4.2"
+  }
 }
